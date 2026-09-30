@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ภาพรวมร้าน | Restaurant Admin</title>
+  <link rel="stylesheet" href="menu.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="dashboard.js" defer></script>
+</head>
+<body>
+  <main class="layout">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">RESTAURANT ADMIN</p>
+        <h1>ภาพรวมร้าน</h1>
+        <p class="muted">จัดการออเดอร์และติดตามยอดขาย</p>
+      </div>
+      <a class="back-link" href="./menu.html">จัดการเมนู</a>
+    </header>
+
+    <section class="panel access-panel" aria-labelledby="access-heading">
+      <div>
+        <h2 id="access-heading">เชื่อมต่อระบบจัดการ</h2>
+        <p class="muted">กรอก URL ของ API และ Admin API Key ที่ตั้งไว้ใน backend</p>
+      </div>
+      <form id="connection-form" class="connection-form">
+        <label>API URL
+          <input id="api-url" type="url" placeholder="http://127.0.0.1:8000" required>
+        </label>
+        <label>Admin API Key
+          <input id="admin-key" type="password" autocomplete="current-password" required>
+        </label>
+        <button type="submit">เชื่อมต่อ</button>
+      </form>
+    </section>
+
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+
+    <section class="stats-grid" aria-label="สถิติยอดขาย">
+      <article class="panel stat-card">
+        <p class="muted">ยอดขายวันนี้</p>
+        <strong id="today-sales">—</strong>
+      </article>
+      <article class="panel stat-card">
+        <p class="muted">ยอดขายสะสม</p>
+        <strong id="total-sales">—</strong>
+      </article>
+      <article class="panel stat-card">
+        <p class="muted">ออเดอร์ทั้งหมด</p>
+        <strong id="total-orders">—</strong>
+      </article>
+      <article class="panel stat-card">
+        <p class="muted">เสร็จแล้ว / กำลังทำ / รอทำ</p>
+        <strong id="status-counts">—</strong>
+      </article>
+    </section>
+
+    <section class="panel sales-panel" aria-labelledby="sales-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">SALES COMPARISON</p>
+          <h2 id="sales-heading">เปรียบเทียบยอดขาย</h2>
+        </div>
+        <button id="refresh-dashboard" class="button-secondary" type="button">โหลดใหม่</button>
+      </div>
+      <div class="comparison-controls">
+        <label>สรุปตาม
+          <select id="sales-period">
+            <option value="daily">รายวัน</option>
+            <option value="monthly">รายเดือน</option>
+            <option value="yearly">รายปี</option>
+          </select>
+        </label>
+        <label>ช่วงที่ 1
+          <input id="first-period-date" type="date" required>
+        </label>
+        <label>ช่วงที่ 2
+          <input id="second-period-date" type="date" required>
+        </label>
+        <button id="compare-sales" class="button-secondary" type="button">เปรียบเทียบ</button>
+      </div>
+      <div id="comparison-summary" class="comparison-summary">
+        <p class="empty-state">เชื่อมต่อ API เพื่อโหลดสถิติ</p>
+      </div>
+      <div class="chart-legend" aria-label="คำอธิบายกราฟ">
+        <span><i class="legend-first"></i>ช่วงที่ 1</span>
+        <span><i class="legend-second"></i>ช่วงที่ 2</span>
+      </div>
+      <div class="chart-scroll">
+        <div id="comparison-chart" class="comparison-chart">
+          <p class="empty-state">เลือกช่วงเวลาเพื่อเปรียบเทียบยอดขาย</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel orders-panel" aria-labelledby="orders-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">ORDER QUEUE</p>
+          <h2 id="orders-heading">คิวออเดอร์</h2>
+        </div>
+        <label class="status-filter">กรองสถานะ
+          <select id="status-filter">
+            <option value="">ทั้งหมด</option>
+            <option value="pending">รอทำ</option>
+            <option value="cooking">กำลังทำ</option>
+            <option value="completed">เสร็จแล้ว</option>
+            <option value="cancelled">ยกเลิก</option>
+          </select>
+        </label>
+      </div>
+      <div id="order-list" class="order-list">
+        <p class="empty-state">เชื่อมต่อ API เพื่อโหลดออเดอร์</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

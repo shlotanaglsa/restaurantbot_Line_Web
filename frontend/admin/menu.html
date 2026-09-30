@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>จัดการเมนู | Restaurant Admin</title>
+  <link rel="stylesheet" href="menu.css">
+  <script src="menu.js" defer></script>
+</head>
+<body>
+  <main class="layout">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">RESTAURANT ADMIN</p>
+        <h1>จัดการเมนู</h1>
+        <p class="muted">เพิ่ม แก้ไข และจัดการสถานะเมนูและตัวเลือกเสริม</p>
+      </div>
+      <a class="back-link" href="./dashboard.html">กลับไปหน้าออเดอร์</a>
+    </header>
+
+    <section class="panel access-panel" aria-labelledby="access-heading">
+      <div>
+        <h2 id="access-heading">เชื่อมต่อระบบจัดการ</h2>
+        <p class="muted">กรอก URL ของ API และ Admin API Key ที่ตั้งไว้ใน backend</p>
+      </div>
+      <form id="connection-form" class="connection-form">
+        <label>API URL
+          <input id="api-url" type="url" placeholder="http://127.0.0.1:8000" required>
+        </label>
+        <label>Admin API Key
+          <input id="admin-key" type="password" autocomplete="current-password" required>
+        </label>
+        <button type="submit">เชื่อมต่อ</button>
+      </form>
+    </section>
+
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+
+    <section class="content-grid">
+      <section class="panel form-panel" aria-labelledby="form-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">MENU EDITOR</p>
+            <h2 id="form-heading">เพิ่มเมนู</h2>
+          </div>
+          <button id="new-item" class="button-secondary" type="button" hidden>เพิ่มเมนูใหม่</button>
+        </div>
+        <form id="menu-form">
+          <label>ชื่อเมนู
+            <input name="name" maxlength="255" required>
+          </label>
+          <div class="field-row">
+            <label>ราคา (บาท)
+              <input name="price" type="number" min="0" step="0.01" required>
+            </label>
+            <label>หมวดหมู่
+              <input name="category" maxlength="100" required>
+            </label>
+          </div>
+          <label>รายละเอียด
+            <textarea name="description" rows="3" maxlength="10000"></textarea>
+          </label>
+          <label class="checkbox-label">
+            <input name="available" type="checkbox" checked>
+            เปิดขาย
+          </label>
+
+          <div class="options-heading">
+            <div>
+              <h3>ตัวเลือกเสริม</h3>
+              <p class="muted">เช่น ไข่ดาว หรือเพิ่มพิเศษ</p>
+            </div>
+            <button id="add-option" class="button-secondary" type="button">+ เพิ่มตัวเลือก</button>
+          </div>
+          <div id="options-list" class="options-list"></div>
+          <button id="save-menu" class="primary-button" type="submit">บันทึกเมนู</button>
+        </form>
+      </section>
+
+      <section class="panel menu-panel" aria-labelledby="menu-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">YOUR CATALOG</p>
+            <h2 id="menu-heading">รายการเมนู</h2>
+          </div>
+          <button id="refresh-menu" class="button-secondary" type="button">โหลดใหม่</button>
+        </div>
+        <div id="menu-list" class="menu-list">
+          <p class="empty-state">เชื่อมต่อ API เพื่อโหลดเมนู</p>
+        </div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

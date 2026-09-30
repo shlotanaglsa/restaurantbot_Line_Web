@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#153b32">
+    <title>สั่งอาหาร | ครัวบ้านสวน</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="./" aria-label="หน้าสั่งอาหาร">
+            <span class="brand-mark" aria-hidden="true">ครัว</span>
+            <span class="brand-name">บ้านสวน <small>ครัวอาหารไทย</small></span>
+        </a>
+        <a class="header-tag" href="#menu">เมนูวันนี้ <span aria-hidden="true">↓</span></a>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-copy">
+                <p class="eyebrow"><span class="open-dot"></span> ทำสดใหม่ทุกจาน</p>
+                <h1>มื้ออร่อย<br>เริ่มต้นที่นี่</h1>
+                <p class="hero-description">เลือกเมนูโปรด ปรับแต่งได้ตามใจ<br>เราปรุงสดใหม่แล้วส่งตรงถึงคุณ</p>
+                <a class="hero-link" href="#menu">เลือกเมนู <span aria-hidden="true">↓</span></a>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <div class="sun-disc"></div>
+                <span class="food-emoji">🍲</span>
+                <span class="art-leaf leaf-one">✦</span>
+                <span class="art-leaf leaf-two">✦</span>
+                <span class="art-caption">อร่อยเหมือนทำให้คนที่บ้าน</span>
+            </div>
+        </section>
+
+        <section id="menu" class="menu-section">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">MADE WITH CARE</p>
+                    <h2>เลือกจานที่ใช่</h2>
+                </div>
+                <p class="section-hint">เพิ่มลงตะกร้า แล้วเลือกวิธีจัดส่งได้เลย</p>
+            </div>
+            <div id="menu-notice" class="menu-notice" role="status" aria-live="polite" hidden></div>
+            <div id="menu-list" class="menu-grid" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <span>ครัวบ้านสวน</span>
+        <span>อร่อย สดใหม่ ใส่ใจทุกจาน</span>
+    </footer>
+
+    <div id="cart-bar" class="cart-bar" hidden>
+        <div class="cart-summary">
+            <span class="cart-icon" aria-hidden="true">🛒</span>
+            <span><strong id="cart-count">ตะกร้า (0)</strong><small>รวม <b id="cart-total">0 บาท</b></small></span>
+        </div>
+        <button id="open-checkout" class="button button-dark" type="button">ดูตะกร้า <span aria-hidden="true">→</span></button>
+    </div>
+
+    <div id="item-modal" class="modal-backdrop" hidden>
+        <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-item-name">
+            <button class="modal-close" type="button" data-close-item aria-label="ปิด">×</button>
+            <p class="eyebrow">ปรับแต่งเมนู</p>
+            <h2 id="modal-item-name">ชื่อเมนู</h2>
+            <p id="modal-item-price" class="modal-price"></p>
+            <div class="field-block">
+                <span class="field-label">จำนวน</span>
+                <div class="quantity-picker">
+                    <button type="button" data-quantity="-1" aria-label="ลดจำนวน">−</button>
+                    <span id="modal-qty" aria-live="polite">1</span>
+                    <button type="button" data-quantity="1" aria-label="เพิ่มจำนวน">+</button>
+                </div>
+            </div>
+            <div class="field-block">
+                <span class="field-label">เพิ่มความอร่อย <small>(ถ้ามี)</small></span>
+                <div id="modal-options-list" class="option-list"></div>
+            </div>
+            <label class="field-block">
+                <span class="field-label">ฝากบอกเชฟ <small>(ถ้ามี)</small></span>
+                <input type="text" id="modal-note" maxlength="2000" placeholder="เช่น ไม่ใส่ผัก, เผ็ดน้อย">
+            </label>
+            <button id="add-to-cart" class="button button-green button-full" type="button">เพิ่มลงตะกร้า</button>
+        </section>
+    </div>
+
+    <div id="checkout-modal" class="modal-backdrop" hidden>
+        <section class="modal-card checkout-card" role="dialog" aria-modal="true" aria-labelledby="checkout-heading">
+            <button class="modal-close" type="button" data-close-checkout aria-label="ปิด">×</button>
+            <p class="eyebrow">เกือบได้อร่อยแล้ว</p>
+            <h2 id="checkout-heading">ตรวจสอบออเดอร์</h2>
+            <div id="checkout-items-list" class="checkout-items"></div>
+            <div class="checkout-total"><span>ยอดรวม</span><strong id="checkout-total">0 บาท</strong></div>
+
+            <form id="checkout-form" class="checkout-form">
+                <h3>ข้อมูลจัดส่ง</h3>
+                <label>ชื่อผู้สั่ง
+                    <input type="text" id="cust-name" autocomplete="name" maxlength="255" placeholder="ชื่อ-นามสกุล" required>
+                </label>
+                <label>เบอร์โทรศัพท์
+                    <input type="tel" id="cust-phone" autocomplete="tel" maxlength="50" placeholder="0812345678" required>
+                </label>
+                <label>ที่อยู่จัดส่ง
+                    <textarea id="cust-address" autocomplete="street-address" maxlength="10000" placeholder="บ้านเลขที่ ซอย ถนน และจุดสังเกต" required></textarea>
+                </label>
+                <p id="checkout-error" class="form-error" role="alert" hidden></p>
+                <div class="checkout-actions">
+                    <button class="button button-light" type="button" data-close-checkout>กลับไปเลือก</button>
+                    <button id="submit-order" class="button button-green" type="submit">ยืนยันออเดอร์ <span aria-hidden="true">→</span></button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <div id="success-modal" class="modal-backdrop" hidden>
+        <section class="modal-card success-card" role="dialog" aria-modal="true" aria-labelledby="success-heading">
+            <div class="success-icon" aria-hidden="true">✓</div>
+            <p class="eyebrow">ORDER RECEIVED</p>
+            <h2 id="success-heading">รับออเดอร์แล้ว!</h2>
+            <p class="success-copy">หมายเลขออเดอร์ของคุณคือ <strong id="success-order-id"></strong></p>
+            <div class="line-instructions">
+                <div class="line-title"><span aria-hidden="true">💬</span><strong>ติดตามคิวผ่าน LINE</strong></div>
+                <p>คัดลอกข้อความด้านล่าง แล้วส่งในแชต LINE ของร้าน เพื่อรับแจ้งสถานะและลำดับคิว</p>
+                <div class="copy-message">
+                    <code id="line-order-message"></code>
+                    <button id="copy-line-message" class="button button-copy" type="button">คัดลอกข้อความ</button>
+                </div>
+                <p id="copy-feedback" class="copy-feedback" role="status" aria-live="polite"></p>
+            </div>
+            <button id="finish-order" class="button button-dark button-full" type="button">กลับไปเลือกเมนู</button>
+        </section>
+    </div>
+</body>
+</html>
